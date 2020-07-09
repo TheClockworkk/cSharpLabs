@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Math
+namespace Fractions
 {
     public sealed class Fraction : IEquatable<Fraction>, IComparable, IComparable<Fraction>, ICloneable //по тз Илюши, наследовать неззя
     {
@@ -29,7 +29,7 @@ namespace Math
         public Fraction(BigInteger numerator, BigInteger denominator) : this(numerator)
         {
             if (denominator == BigInteger.Zero)
-                throw new DivideByZeroException("The denominator must be nonzero!");
+                throw new DivideByZeroException("Знаменатель не нолик!!!!");
 
             Denominator = denominator;
 
@@ -112,7 +112,7 @@ namespace Math
         public static Fraction Sqrt(Fraction fraction)// корень
         {
             if (fraction < 0)
-                throw new ArgumentException("Unable to extract square root from negative fraction!");
+                throw new ArgumentException("Нельзя взять корень с отрицательной штуки!!!");
 
             // Extreme values
             if (fraction == 0 || fraction == 1)
@@ -135,10 +135,10 @@ namespace Math
         public static Fraction SqrtN(Fraction fraction, int n) //корень энной степени
         {
             if ((fraction < 0) && (n % 2 == 0))
-                throw new ArgumentException("It is not possible to isolate the even root of a negative fraction!");
+                throw new ArgumentException("Невозможно выделить четный корень отрицательной дроби!");
 
             if (n < 2)
-                throw new ArgumentException("The root of the nth degree must be greater than or equal to 2!");
+                throw new ArgumentException("Корень N-й степени должен быть больше или равен 2!");
 
             if (fraction == 0 || fraction == 1)
                 return fraction;
@@ -161,7 +161,7 @@ namespace Math
         public string GetDecimalRepresentation(int decimals = 28) //привод обычной дроби в десятичную
         {
             if (decimals < 0)
-                throw new ArgumentException("Decimals can not be less than Zero!");
+                throw new ArgumentException("Знаков после запятой не может быть <0");
 
             BigInteger numerator = BigInteger.Abs(Numerator);
             BigInteger denumerator = BigInteger.Abs(Denominator);
@@ -268,7 +268,7 @@ namespace Math
         public static Fraction Division(Fraction left, Fraction right) //деление
         {
             if (right == 0)
-                throw new DivideByZeroException("Can not divide by Zero!");
+                throw new DivideByZeroException("Неззя делить на ноль!");
 
             return Multiplication(left, right.Reciprocate());
         }
@@ -443,7 +443,7 @@ namespace Math
             if (obj is Fraction)
                 return CompareTo(obj as Fraction);
 
-            throw new ArgumentException("Object is not a Fraction!");
+            throw new ArgumentException("Объект не Дробь!!");
         }
         #endregion
 
