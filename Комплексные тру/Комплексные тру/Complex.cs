@@ -57,7 +57,7 @@ namespace Complexx
         private static BigInteger Fact(int n)
         {
             if (n < 0)
-                throw new ArgumentException("It is impossible to calculate the factorial of a negative number!");
+                throw new ArgumentException("Скажем нет факториалам отрицательного числа!");
 
             BigInteger result = BigInteger.One;
             for (int i = 2; i <= n; i++)
@@ -93,7 +93,7 @@ namespace Complexx
         private static Fraction GetTaylorArctan(Fraction x)
         {
             if (Fraction.Abs(x) > 1)
-                throw new ArgumentException($"Argument absolute value must be less than one!");
+                throw new ArgumentException($"Значение аргумента должно быть меньше одного!");
 
             const int iterations = 10;
 
@@ -136,7 +136,7 @@ namespace Complexx
         public static Array SqrtN(Complex complex, int n)
         {
             if (n < 2)
-                throw new ArgumentException("The root of the nth degree must be greater than or equal to 2!");
+                throw new ArgumentException("Корень N-й степени должен быть больше или равен 2!");
 
             List<Complex> roots = new List<Complex>();
 
@@ -214,7 +214,7 @@ namespace Complexx
         public static Complex Division(Complex left, Complex right)
         {
             if ((right.Real == 0) && (right.Imaginary == 0))
-                throw new DivideByZeroException("Can not divide by zero!");
+                throw new DivideByZeroException("На ноль делить неззя!");
 
             Fraction newReal = (left.Real * right.Real + left.Imaginary * right.Imaginary) /
                 (right.Real * right.Real + right.Imaginary * right.Imaginary);
@@ -317,7 +317,7 @@ namespace Complexx
             if (obj is Complex)
                 return CompareTo(obj as Complex);
 
-            throw new ArgumentException("Object is not a Complex!");
+            throw new ArgumentException("Объект не Complex!");
         }
         #endregion
 

@@ -30,7 +30,7 @@ namespace Fractions
         public Fraction(BigInteger numerator, BigInteger denominator)
         {
             if (denominator == BigInteger.Zero)
-                throw new ArgumentException("The denominator must be nonzero!");
+                throw new ArgumentException("The denominator must be non zero!");
 
             Numerator = numerator;
             Denominator = denominator;
