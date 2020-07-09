@@ -8,16 +8,16 @@ namespace Practice
         public static Fraction Solve(Fraction left, Fraction right, Func<Fraction, Fraction> function, Fraction epsilon)
         {
             if (left > right)
-                throw new ArgumentException("Wrong interval. The left border should be less than the right!");
+                throw new ArgumentException("Интервал не верен, левая граница должна быть меньше правой!!!!");
 
             if (function(left) * function(right) > 0)
-                throw new ArgumentException("Wrong interval. Can not find root here!");
+                throw new ArgumentException("Неверный интервал, не можем найти тут корень!!!!!!!");
 
             if (function == null)
-                throw new ArgumentException("No function was passed!");
+                throw new ArgumentException("Не задана функция!!!!");
 
             if (epsilon < 0)
-                throw new ArgumentException("Epsilon must be positive!");
+                throw new ArgumentException("Эпсилон не должен быть меньше нуля!!!!!!");
 
             Fraction a = left;
             Fraction b = right;
