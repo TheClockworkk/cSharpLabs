@@ -1,0 +1,7 @@
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\obj\Debug\3-й диохтомийный номерочек.csprojAssemblyReference.cache
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\obj\Debug\3-й диохтомийный номерочек.csproj.CoreCompileInputs.cache
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\bin\Debug\3-й диохтомийный номерочек.exe.config
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\bin\Debug\3-й диохтомийный номерочек.exe
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\bin\Debug\3-й диохтомийный номерочек.pdb
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\obj\Debug\3-й диохтомийный номерочек.exe
+C:\Users\nmsbu\source\repos\3-й диохтомийный номерочек\3-й диохтомийный номерочек\obj\Debug\3-й диохтомийный номерочек.pdb
