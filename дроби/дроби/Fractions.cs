@@ -5,40 +5,38 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fractions
+namespace Math
 {
-    public sealed class Fraction : IEquatable<Fraction>, IComparable, IComparable<Fraction>, ICloneable
+    public sealed class Fraction : IEquatable<Fraction>, IComparable, IComparable<Fraction>, ICloneable //по тз Илюши, наследовать неззя
     {
         #region Properties
-        public BigInteger Numerator { get; private set; }
+        public BigInteger Numerator { get; private set; } // пилим геттеры сеттеры для числителя и знаменателя
         public BigInteger Denominator { get; private set; }
         #endregion
 
         #region Constructors
-        public Fraction()
+        public Fraction() // и конструкторы, сначала для пустого fraction, на случай создпния 0/0 по умолчанию
         {
             Numerator = BigInteger.Zero;
             Denominator = BigInteger.One;
         }
 
-        public Fraction(BigInteger numerator)
+        public Fraction(BigInteger numerator) : this() // а затем и не для пустых. This для передачи ссылки на первое пустое место в скобках, а затем выполняется предыдущий
         {
             Numerator = numerator;
-            Denominator = BigInteger.One;
         }
 
-        public Fraction(BigInteger numerator, BigInteger denominator)
+        public Fraction(BigInteger numerator, BigInteger denominator) : this(numerator)
         {
             if (denominator == BigInteger.Zero)
-                throw new ArgumentException("The denominator must be nonzero!");
+                throw new DivideByZeroException("The denominator must be nonzero!");
 
-            Numerator = numerator;
             Denominator = denominator;
 
-            Reduce();
+            Reduce(); //это сокращение, описывается ниже
         }
 
-        public Fraction(Fraction fraction)
+        public Fraction(Fraction fraction) //сюда передается готовая дробь, типа конструктор копирования
         {
             Numerator = fraction.Numerator;
             Denominator = fraction.Denominator;
@@ -46,7 +44,7 @@ namespace Fractions
         #endregion
 
         #region Private
-        private Fraction Reduce()
+        private Fraction Reduce() //сокращение. Нахождение общих делителей и сокращение
         {
             BigInteger gcd = BigInteger.GreatestCommonDivisor(Numerator, Denominator);
 
@@ -62,7 +60,7 @@ namespace Fractions
             return this;
         }
 
-        private Fraction Reciprocate()
+        private Fraction Reciprocate() //взаимообратная дробь
         {
             if (Numerator == BigInteger.Zero)
                 return this;
@@ -70,7 +68,7 @@ namespace Fractions
             return new Fraction(Denominator, Numerator);
         }
 
-        private void ToDenominator(BigInteger targetDenominator)
+        private void ToDenominator(BigInteger targetDenominator) //надо будет при сложении и вычитании, типа приведенпие к общему заменателю
         {
             if ((targetDenominator < Denominator) || (targetDenominator % Denominator != 0))
                 return;
@@ -83,19 +81,19 @@ namespace Fractions
             }
         }
 
-        private static BigInteger GetLeastCommonMultiple(BigInteger first, BigInteger second)
+        private static BigInteger GetLeastCommonMultiple(BigInteger first, BigInteger second) //ищется НОК
         {
             return (first * second) / BigInteger.GreatestCommonDivisor(first, second);
         }
         #endregion
 
         #region Public
-        public static Fraction Abs(Fraction fraction)
+        public static Fraction Abs(Fraction fraction) //модуль
         {
             return new Fraction(BigInteger.Abs(fraction.Numerator), BigInteger.Abs(fraction.Denominator));
         }
 
-        public static Fraction Pow(Fraction fraction, int exponent)
+        public static Fraction Pow(Fraction fraction, int exponent) //в степень
         {
             Fraction result = fraction.Clone() as Fraction;
 
@@ -111,11 +109,12 @@ namespace Fractions
             return result.Reduce();
         }
 
-        public static Fraction Sqrt(Fraction fraction)
+        public static Fraction Sqrt(Fraction fraction)// корень
         {
             if (fraction < 0)
                 throw new ArgumentException("Unable to extract square root from negative fraction!");
 
+            // Extreme values
             if (fraction == 0 || fraction == 1)
                 return fraction;
 
@@ -133,7 +132,7 @@ namespace Fractions
             return A1.Reduce();
         }
 
-        public static Fraction SqrtN(Fraction fraction, int n)
+        public static Fraction SqrtN(Fraction fraction, int n) //корень энной степени
         {
             if ((fraction < 0) && (n % 2 == 0))
                 throw new ArgumentException("It is not possible to isolate the even root of a negative fraction!");
@@ -158,7 +157,8 @@ namespace Fractions
             return A1.Reduce();
         }
 
-        public string GetDecimalRepresentation(int decimals = 28)
+
+        public string GetDecimalRepresentation(int decimals = 28) //привод обычной дроби в десятичную
         {
             if (decimals < 0)
                 throw new ArgumentException("Decimals can not be less than Zero!");
@@ -192,7 +192,7 @@ namespace Fractions
         {
             return fraction;
         }
-        public static Fraction operator +(Fraction fraction)
+        public static Fraction operator +(Fraction fraction) //перегрузка + унарного
         {
             return UnaryPlus(fraction);
         }
@@ -215,7 +215,7 @@ namespace Fractions
 
             return new Fraction(left.Numerator + right.Numerator, lcm).Reduce();
         }
-        public static Fraction operator +(Fraction left, Fraction right)
+        public static Fraction operator +(Fraction left, Fraction right) // перегрузки плюсов
         {
             return Addition(left, right);
         }
@@ -228,7 +228,7 @@ namespace Fractions
             return Addition(new Fraction(left), right);
         }
 
-        public static Fraction Substraction(Fraction left, Fraction right)
+        public static Fraction Substraction(Fraction left, Fraction right)// вычитание
         {
             return Addition(left, -right);
         }
@@ -245,7 +245,7 @@ namespace Fractions
             return Substraction(new Fraction(left), right);
         }
 
-        public static Fraction Multiplication(Fraction left, Fraction right)
+        public static Fraction Multiplication(Fraction left, Fraction right)// умножение
         {
             BigInteger newNumerator = left.Numerator * right.Numerator;
             BigInteger newDenominator = left.Denominator * right.Denominator;
@@ -265,7 +265,7 @@ namespace Fractions
             return Multiplication(new Fraction(left), right);
         }
 
-        public static Fraction Division(Fraction left, Fraction right)
+        public static Fraction Division(Fraction left, Fraction right) //деление
         {
             if (right == 0)
                 throw new DivideByZeroException("Can not divide by Zero!");
@@ -285,30 +285,7 @@ namespace Fractions
             return Division(new Fraction(left), right);
         }
 
-        public static Fraction Modulus(Fraction left, Fraction right)
-        {
-            if (right == 0)
-                throw new DivideByZeroException("Can not divide by Zero!");
-
-            while (left >= right)
-                left -= right;
-
-            return left;
-        }
-        public static Fraction operator %(Fraction left, Fraction right)
-        {
-            return Modulus(left, right);
-        }
-        public static Fraction operator %(Fraction left, BigInteger right)
-        {
-            return Modulus(left, new Fraction(right));
-        }
-        public static Fraction operator %(BigInteger left, Fraction right)
-        {
-            return Modulus(new Fraction(left), right);
-        }
-
-        public static Fraction Increment(Fraction fraction)
+        public static Fraction Increment(Fraction fraction) //инкремент
         {
             return Addition(fraction, new Fraction(BigInteger.One));
         }
@@ -317,7 +294,7 @@ namespace Fractions
             return Increment(fraction);
         }
 
-        public static Fraction Decrement(Fraction fraction)
+        public static Fraction Decrement(Fraction fraction) //декремент
         {
             return Substraction(fraction, new Fraction(BigInteger.One));
         }
@@ -326,7 +303,7 @@ namespace Fractions
             return Decrement(fraction);
         }
 
-        public static bool operator ==(Fraction left, Fraction right)
+        public static bool operator ==(Fraction left, Fraction right) //равенство
         {
             if (ReferenceEquals(left, null) && right is null)
                 return true;
@@ -344,7 +321,7 @@ namespace Fractions
             return (new Fraction(left) == right);
         }
 
-        public static bool operator !=(Fraction left, Fraction right)
+        public static bool operator !=(Fraction left, Fraction right) //не равно
         {
             return !(left == right);
         }
@@ -357,7 +334,7 @@ namespace Fractions
             return (new Fraction(left) != right);
         }
 
-        public static bool operator >(Fraction left, Fraction right)
+        public static bool operator >(Fraction left, Fraction right) //больше
         {
             if (left.CompareTo(right) == 1)
                 return true;
@@ -372,7 +349,7 @@ namespace Fractions
             return (new Fraction(left) > right);
         }
 
-        public static bool operator <(Fraction left, Fraction right)
+        public static bool operator <(Fraction left, Fraction right) //меньше
         {
             if (left.CompareTo(right) == -1)
                 return true;
@@ -387,7 +364,7 @@ namespace Fractions
             return (new Fraction(left) < right);
         }
 
-        public static bool operator >=(Fraction left, Fraction right)
+        public static bool operator >=(Fraction left, Fraction right) // больше равно
         {
             if (left.CompareTo(right) >= 0)
                 return true;
@@ -402,7 +379,7 @@ namespace Fractions
             return (new Fraction(left) >= right);
         }
 
-        public static bool operator <=(Fraction left, Fraction right)
+        public static bool operator <=(Fraction left, Fraction right) //меньше равно
         {
             if (left.CompareTo(right) <= 0)
                 return true;
@@ -419,19 +396,19 @@ namespace Fractions
         #endregion
 
         #region Overriden
-        public override string ToString()
+        public override string ToString() //создание строки по тз aka перегрузка метода to string. Короче числитель / знаменатеоль
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(Numerator).Append('/').Append(Denominator);
             return sb.ToString();
         }
 
-        public override int GetHashCode()
+        public override int GetHashCode() //ХЭЭЭЭШ
         {
             return Numerator.GetHashCode() ^ Denominator.GetHashCode();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object obj) //перегрузка сравнения для дробей юзания
         {
             if (obj is null)
                 return false;
@@ -444,20 +421,21 @@ namespace Fractions
         #endregion
 
         #region IEquatable<T>
-        public bool Equals(Fraction other)
+        public bool Equals(Fraction other) //юзание для дробей
         {
             if (other is null)
                 return false;
 
-            if ((Denominator == other.Denominator) && (Numerator == other.Numerator))
-                return true;
+            if (Denominator == other.Denominator)
+                if (Numerator == other.Numerator)
+                    return true;
 
             return false;
         }
         #endregion
 
         #region IComparable
-        public int CompareTo(object obj)
+        public int CompareTo(object obj) // для > <
         {
             if (obj is null)
                 return 1;
@@ -470,7 +448,7 @@ namespace Fractions
         #endregion
 
         #region IComparable<T>
-        public int CompareTo(Fraction other)
+        public int CompareTo(Fraction other) //сравненьице для дроби нашей
         {
             if (other is null)
                 return 1;
@@ -485,7 +463,7 @@ namespace Fractions
         #endregion
 
         #region ICloneable
-        public object Clone()
+        public object Clone() //клоны
         {
             return new Fraction(this);
         }
