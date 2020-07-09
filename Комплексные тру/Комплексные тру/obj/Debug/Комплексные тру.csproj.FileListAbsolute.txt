@@ -1,0 +1,7 @@
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\bin\Debug\Комплексные тру.exe.config
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\bin\Debug\Комплексные тру.exe
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\bin\Debug\Комплексные тру.pdb
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\obj\Debug\Комплексные тру.csprojAssemblyReference.cache
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\obj\Debug\Комплексные тру.csproj.CoreCompileInputs.cache
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\obj\Debug\Комплексные тру.exe
+C:\Users\nmsbu\source\repos\Комплексные тру\Комплексные тру\obj\Debug\Комплексные тру.pdb
